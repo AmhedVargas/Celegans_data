@@ -5,13 +5,12 @@ $num_args = $#ARGV + 1;
 if ($num_args != 1) {
   print "\nUsage: Score_GLO.pl sequences_fasta\n\n";
   print "\tSeq_fasta: Fasta file containing sequence to score. One per line\n";
-  print "\tPlease note this might not work... Also sequence_lib_scores.db should be present\n";
+# print "\tPlease note this might not work... Also sequence_lib_scores.db should be present\n";
 
   exit;
 }
 ############
 #Load libraries
-
 use BerkeleyDB;
 use Bio::Seq;
 use Math::Random;
@@ -35,6 +34,7 @@ my $sequence_lib = new BerkeleyDB::Btree
 # Get input
 my $dnaseq = '';
 my $seqtype = 'DNA';
+my $name = '';
 
 ### If a nucleotide sequence was entered, calculate its score ###
 
@@ -46,6 +46,11 @@ my @input_coding_sequence;
 ##Reading and hashing genomic sequence
 open(op,$Sqinps) or die "cannot open Ref file\n";
 while($line=<op>){
+
+if ($line =~ m/>(.*)\n/){
+$name = $1;
+
+}else{
 chomp($line);
 
 $results = {}; #Get a pointer to an empty array that will hold the results
@@ -53,8 +58,10 @@ $results = {}; #Get a pointer to an empty array that will hold the results
 ( $results->{'input_sequence_score'}, $results->{'input_lowest_score'}, $results->{'input_n_w_lowest_score'} ) = score_sequence( \@input_coding_sequence, $sequence_lib );
  
 
-print $line."\t".$results->{'input_sequence_score'}."\t".$results->{'input_lowest_score'}."\t".$results->{'input_n_w_lowest_score'}."\n";
+print $name."\t".$results->{'input_sequence_score'}."\n";
 
+$name = '';
+}
 }
 close(op);
 
