@@ -1,3 +1,8 @@
+DATA
 Celegans_tAi.csv:
 The tAI values were downloaded from the tAI Calculator (http://tau-tai.azurewebsites.net).
 Input data required for ExtRamp (https://github.com/ridgelab/ExtRamp)[https://academic.oup.com/nar/article/47/3/1123/5289485]
+
+SOFTWARE
+GLO modified scripts:
+Original source https://github.com/dickinson-lab/germline
